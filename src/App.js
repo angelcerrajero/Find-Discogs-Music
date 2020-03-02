@@ -1,26 +1,40 @@
 import React from 'react';
-import logo from './logo.svg';
+import ErrorBoundary from './components/ErrorBoundary'
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import Search from './components/Search'
+import Detail from './components/Detail'
+import { SnackbarProvider } from 'notistack';
 import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
 
-export default App;
+
+export default class App extends React.Component {
+
+  
+  componentDidMount() {
+  
+  }
+
+  
+  
+  render(){
+    
+    return(
+      <div>
+      <ErrorBoundary>
+				<SnackbarProvider iconVariant={{ success: '✅', error: '✖️', warning: '⚠️', info: 'ℹ️', }}
+    anchorOrigin={{ vertical: 'top', horizontal: 'center',}}>
+
+        <Router>
+          <Switch>
+              <Route exact path="/" component={Search} />
+              <Route exact path="/detail/:type/:id/" component={Detail} />
+              <Route component={Search}/>
+          </Switch>
+        </Router>
+        </SnackbarProvider>       
+			</ErrorBoundary>
+      </div>
+    );
+  }
+}
